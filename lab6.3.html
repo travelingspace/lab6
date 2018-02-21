@@ -55,6 +55,29 @@
         //function that executes when the page is loaded
         $(function () {
             $("span").css("font-weight", "bold");
+
+            $("h2").click(function () {
+                $(this).css("background-color", "green");
+            });
+
+            $("#h1_blue").click(function () {
+                $("h1").css("color", "blue");
+            });
+
+            $("#remove_not_important").click(function () {
+                var listItems = $("li");
+                listItems.each(function (idx, li) {
+                    if ($(li).hasClass("not_important")) {
+                        $(this).slideUp("slow");
+                    }
+
+                });
+            });
+
+            $("ul li").click(function () {
+                $(this).slideUp("slow");
+            });
+
         });
 
     </script>
