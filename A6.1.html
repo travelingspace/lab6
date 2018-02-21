@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>TODO List A6.1</title>
+
+    <style>
+
+        .done{
+            color:gray;
+            font-style:italic;
+            font-size:1.5em;
+        }
+
+        li{
+            color:black;
+            font-weight:bold;
+            font-size:2em;
+            font-style:normal;
+        }
+
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+
+
+    <input type="text" maxlength="50" id="textEntry" placeholder="enter item here" />
+    <br />
+    <br />
+    <button id="btn">Submit Item</button> &nbsp;&nbsp;&nbsp; <button id="remove">Remove Completed Items</button>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <div id="list">
+        <ul id="ul_list">
+
+        </ul>
+    </div>
+
+    <div id="table">
+        <h2>Completed Task List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>TASK NAME</th>
+                    <th>DATE COMPLETED</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#btn").click(function (){
+                if ($("#textEntry").val() == "") {
+                    alert("You must enter a value into the input box before clicking submit.");    
+                } else {
+                    $("#ul_list").append("<li>" + $("#textEntry").val() + "</li>");
+                    $("#textEntry").val("");
+                    alert("Item added.");
+                };
+            });
+
+            //must use delegation to attach listener to dynamically generated DOM elements --- <li> elements do not exist at page load (took a while to figure that out)
+            $("#ul_list").on('click', 'li', function () {
+                $(this).toggleClass("done");
+            });
+
+            //remove and add task to table
+            $("#remove").click(function () {
+                var listItems = $("li");
+                listItems.each(function (idx, li) {
+                    if ($(li).hasClass("done")) {
+                        $(this).slideUp("slow");
+                        $(this).toggleClass("done");
+                        $('#table tr:last').after('<tr><td>' + $(this).text() + '</td>' + '<td>' + Date() + '</td></tr>');
+                    };
+                });
+            });
+        })
+    </script>
+
+</body>
+</html>
